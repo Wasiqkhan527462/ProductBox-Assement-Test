@@ -1,5 +1,5 @@
 const async = require('async');
-const { fetchWebsiteTitle, generateHtmlResponse } = require('./utils');
+const { fetchWebsiteTitle, generateHtmlResponse, createHandler } = require('./utils');
 
 // Async.js implementation with controlled concurrency
 // Limits to 5 concurrent requests to avoid overwhelming servers
@@ -18,20 +18,7 @@ const handleTitlesWithAsync = addresses => new Promise((resolve, reject) => {
     );
 });
 
-// Main route handler for /I/want/title
-const handler = async (req, res) => {
-    try {
-        const addresses = req.query.address;
-        if (!addresses) return res.status(400).send('No addresses provided');
-        
-        const results = await handleTitlesWithAsync(Array.isArray(addresses) ? addresses : [addresses]);
-        res.setHeader('Content-Type', 'text/html');
-        res.send(generateHtmlResponse(results));
-        
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
-    }
-};
+// Create handler using the shared handler function
+const handler = createHandler(handleTitlesWithAsync);
 
 module.exports = handler;

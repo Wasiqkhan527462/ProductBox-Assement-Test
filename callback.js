@@ -1,4 +1,4 @@
-const { fetchWebsiteTitle, generateHtmlResponse } = require('./utils');
+const { fetchWebsiteTitle, generateHtmlResponse, createHandler } = require('./utils');
 
 // Traditional callback-based implementation
 const handleTitlesWithCallbacks = (addresses, callback) => {
@@ -25,20 +25,7 @@ const handleTitlesWithCallbacks = (addresses, callback) => {
     });
 };
 
-// Main route handler for /I/want/title
-const handler = (req, res) => {
-    const addresses = req.query.address;
-    if (!addresses) return res.status(400).send('No addresses provided');
-    
-    handleTitlesWithCallbacks(Array.isArray(addresses) ? addresses : [addresses], (error, results) => {
-        if (error) {
-            console.error('Error:', error);
-            return res.status(500).send('Internal Server Error');
-        }
-        
-        res.setHeader('Content-Type', 'text/html');
-        res.send(generateHtmlResponse(results));
-    });
-};
+// Create handler using the shared handler function
+const handler = createHandler(handleTitlesWithCallbacks);
 
 module.exports = handler;

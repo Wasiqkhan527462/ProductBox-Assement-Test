@@ -1,5 +1,5 @@
 const Bacon = require('baconjs');
-const { fetchWebsiteTitle, generateHtmlResponse } = require('./utils');
+const { fetchWebsiteTitle, generateHtmlResponse, createHandler } = require('./utils');
 
 // SIMPLEST Bacon.js implementation - easy to understand
 const handleTitlesWithBacon = async (addresses) => {
@@ -24,24 +24,8 @@ const handleTitlesWithBacon = async (addresses) => {
     return results;
 };
 
-// Main route handler - same as your other implementations
-const handler = async (req, res) => {
-    try {
-        const addresses = req.query.address;
-        if (!addresses) return res.status(400).send('No addresses provided');
-        
-        // Get results using Bacon.js
-        const results = await handleTitlesWithBacon(Array.isArray(addresses) ? addresses : [addresses]);
-        
-        // Send response (same as before)
-        res.setHeader('Content-Type', 'text/html');
-        res.send(generateHtmlResponse(results));
-        
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
-    }
-};
+// Create handler using the shared handler function
+const handler = createHandler(handleTitlesWithBacon);
 
 module.exports = handler;
 module.exports.handleTitlesWithBacon = handleTitlesWithBacon;
