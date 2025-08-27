@@ -3,12 +3,17 @@ const app = express();
 
 // Choose implementation: callback-impl, async-impl, or promise-impl
 
-// First implementation
-const handler = require('./callback.js'); // Traditional callbacks
+// First implementation - Callback
+// const handler = require('./callback.js'); // Traditional callbacks
 
-// Second implementation
+// Second implementation - Async.js
 // const handler = require('./async.js'); // Async.js with concurrency control
 
+// Third implementation - Promise
+// const handler = require('./promise'); // Promise implementation
+
+// Fourth implementation - Bacon.js
+const handler = require('./bacon'); // Bacon.js for functional reactive programming
 
 app.get('/I/want/title', handler);
 
