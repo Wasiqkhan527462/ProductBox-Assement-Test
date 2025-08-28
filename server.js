@@ -18,7 +18,7 @@ const rl = readline.createInterface({
 // Display the menu with all available options
 const showMenu = () => {
     console.log('\n' + '='.repeat(60));
-    console.log('WEBSITE TITLE FETCHER - IMPLEMENTATION SELECTOR');
+    console.log('🚀 WEBSITE TITLE FETCHER - IMPLEMENTATION SELECTOR');
     console.log('='.repeat(60));
     console.log('\nChoose an implementation to run:');
     
@@ -51,8 +51,8 @@ const startServer = (choice) => {
     
     // Start server on port 3000
     const server = app.listen(3000, () => {
-        console.log(`\nServer running with ${impl.name}!`);
-        console.log('Press Ctrl+C to stop\n');
+        console.log(`\n🎉 Server running with ${impl.name}!`);
+        console.log('📱 Press Ctrl+C to stop\n');
     });
     
     // Handle graceful shutdown
